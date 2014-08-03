@@ -2,6 +2,45 @@
 {
     <script src="~/Scripts/jquery.signalR-2.1.1.js"></script>
     <script src="~/signalr/hubs"></script>
+    <script type="text/javascript">
+        $(function() {
+            var sharedContentHub = $.connection.sharedContent;
+
+            sharedContentHub.client.globalMessageReceived = function (message) {
+                $("#message").val(message);
+            };
+
+            sharedContentHub.client.statusUpdate = function (message) {
+                var val = $("#log").val();
+                val += "\n" + message;
+                $("#log").val(val);
+            };
+
+            $.connection.hub.start().done(function() {
+                $("#sendmessagebutton").click(function () {
+                    sharedContentHub.server.setGlobalMessage($("#message").val());
+                });
+            });
+        })
+    </script>
 }
 
-shared content!!
+<div class="jumbotron">
+    <h1>Shared content</h1>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <textarea id="message" cols="100" rows="10"></textarea>
+    </div>
+    <div class="col-md-4">
+        <input type="button" id="sendmessagebutton" value="send message"/>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <textarea id="log" cols="100" rows="10"></textarea>
+    </div>
+</div>
+
+
+
