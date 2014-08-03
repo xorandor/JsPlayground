@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Web.Controllers
 {
-    public class SignalRController : Controller
+    public class SharedContentController : Controller
     {
         public ActionResult Index()
         {
